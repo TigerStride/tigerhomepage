@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('feedbackForm').addEventListener('submit', handleFormSubmit);
+    document.getElementById('feedbackForm').addEventListener('reset', resetFeedback);
+});
+
 function initValidation() {
     document.getElementById('feedbackForm').addEventListener('submit', function (event) {
         var emailField = document.getElementById('customerEmail');
@@ -13,34 +18,49 @@ function initValidation() {
 
 function validateEntries() {
     try {
-        const email = document.getElementById('customerEmail').value;
-        const name = document.getElementById('customerName').value;
-        const msg = document.getElementById('messageText').value;
+        const email = document.getElementById('customerEmail');
+        const name = document.getElementById('customerName');
+        const msg = document.getElementById('messageText');
 
-        if (!email || !name || !msg) {
-            displayError('Please fill out all fields.');
+        setFieldAppearance(email, email.value);
+        setFieldAppearance(name, name.value);
+        setFieldAppearance(msg, msg.value);
+
+        if (!email.value || !name.value || !msg.value) {
+            displayMessage('Please fill out all fields.', true);
             return false;
         }
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            displayError('Please enter a valid email address.');
-            return false;
-        }
+        
     } catch (error) {
         console.error('Error:', error);
-        displayError('An unexpected error occurred. Please try again.');
+        displayMessage('An unexpected error occurred. Please try again.', true);
         return false;
     }
 
     return true;
 }
 
-function displayError(message) {
+function setFieldAppearance(field, isValid) {
+    if (isValid) {
+        field.classList.remove('feedback-field-err');
+        field.classList.add('feedback-field-normal');
+    } else {
+        field.classList.remove('feedback-field-normal');
+        field.classList.add('feedback-field-err');    }
+}
+
+function displayMessage(message, bError) {
     const errorElement = document.getElementById('feedbackMsg');
     if (errorElement) {
         errorElement.textContent = message;
         errorElement.style.display = 'block';
+        if (bError) {
+            errorElement.classList.remove('feedback-ok');
+            errorElement.classList.add('feedback-err');
+        } else {
+            errorElement.classList.remove('feedback-err');
+            errorElement.classList.add('feedback-ok');
+        }
     } else {
         alert(message); // Fallback if error element is not found
     }
@@ -65,15 +85,14 @@ function handleFormSubmit(event) {
         })
             .then(response => {
                 if (response.ok) {
-                    document.getElementById('feedbackMsg').innerText = successMsg;
-                    form.reset(); // Reset the form
+                    displayMessage(successMsg, false); 
                 } else {
-                    document.getElementById('feedbackMsg').innerText = errMsg;
+                    displayMessage(errMsg, false);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('feedbackMsg').innerText = errMsg;
+                displayMessage(errMsg, false);
             });
     }
 }
