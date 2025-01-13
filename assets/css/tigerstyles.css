@@ -94,11 +94,39 @@ ul.tiger-icons li:before {
     width: 2.5em;
 }
 
+#messageText {
+    color: darkblue;
+}
+
+#feedbackMsg {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
 .feedback {
-    color: darkgreen;
+    content: "\f058";
+    font-family: 'Font Awesome 5 Free', sans-serif;
     font-weight: bold;
     font: .9em sans-serif;
     padding-left: 4.5em;
     margin: 0;
     height: 1.5em;
+}
+
+.feedback-ok {
+    color: darkgreen;
+    font-style: normal;
+}
+
+.feedback-err {
+    color: darkred;
+    font-style: italic;
+}
+
+.feedback-field-normal {
+    background-color: field;
+}
+
+.feedback-field-err {
+    background-color: lightgoldenrodyellow;
 }
