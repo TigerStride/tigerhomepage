@@ -10,6 +10,7 @@
 :root {
     --nav-width: 15em;
 	--banner-img-height: 10em;
+	--tiger-theme-green: #4acaa8;
 }
 
 html, body, div, span, applet, object,
@@ -122,7 +123,7 @@ input, select, textarea {
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #4acaa8 !important;
+			color: var(--tiger-theme-green) !important;
 		}
 
 	strong, b {
@@ -1790,7 +1791,7 @@ input, select, textarea {
 	}
 
 	header.major h2 {
-		color: #4acaa8;
+		color: var(--tiger-theme-green);
 		font-size: 3.5em;
 	}
 
@@ -1853,7 +1854,7 @@ input, select, textarea {
 		input[type="email"]:focus,
 		select:focus,
 		textarea:focus {
-			border-color: #4acaa8;
+			border-color: var(--tiger-theme-green);
 		}
 
 	select {
@@ -1958,7 +1959,7 @@ input, select, textarea {
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #4acaa8;
+			border-color: var(--tiger-theme-green);
 		}
 
 	input[type="checkbox"] + label:before {
@@ -2407,7 +2408,7 @@ input, select, textarea {
 			}
 
 			ul.feature-icons li:before {
-				background: #4acaa8;
+				background: var(--tiger-theme-green);
 				border-radius: 100%;
 				color: #ffffff;
 				display: block;
