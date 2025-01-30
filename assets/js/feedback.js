@@ -72,10 +72,12 @@ function handleFormSubmit(event) {
     const form = document.getElementById('feedbackForm');
     const formData = new FormData(form);
     var errMsg = 'Thanks for your interest!  This site is currently under construction.  Please check back with us later.';
-    var successMsg = 'Thank you for your inquiry.  We will get back to you as soon as possible.';
+    var successMsg = 'Thank you, your inquiry has been received.';
+    var processingMsg = 'Processing your request...';
 
     if (validateEntries() === true) {
 
+        displayMessage(processingMsg, false);
         fetch('https://api.tigerstridesolutions.com/api/HttpTriggerContact', {
             method: 'POST',
             body: formData,
