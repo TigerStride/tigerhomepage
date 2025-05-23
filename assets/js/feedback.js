@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('feedbackForm').addEventListener('submit', handleFormSubmit);
     document.getElementById('feedbackForm').addEventListener('reset', resetFeedback);
+
+    // Add event listener for the name field to warm up the Azure Function on first interaction
+    const nameField = document.getElementById('customerName');
+    if (nameField) {
+        // Use the input event instead of change to detect typing
+        nameField.addEventListener('input', warmUpAzureFunction, { once: true });
+    }
 });
 
 function initValidation() {
@@ -106,4 +113,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function resetFeedback() {
     document.getElementById('feedbackMsg').innerText = '';
+}
+
+/**
+ * Warm up the Azure Function with a lightweight health check request
+ * This helps reduce cold start latency when the actual form is submitted
+ */
+function warmUpAzureFunction() {
+    console.log('Warming up Azure Function...');
+    
+    // Make a lightweight request to the health check endpoint
+    fetch('https://api.tigerstridesolutions.com/api/CheckHealth', {
+        method: 'GET',
+        headers: {
+            'X-Custom-Header': 'warmup-request'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Azure Function warmed up successfully');
+        }
+    })
+    .catch(error => {
+        // Silently handle errors - this is just a warm-up request
+        console.debug('Warm-up request error (non-critical):', error);
+    });
 }
